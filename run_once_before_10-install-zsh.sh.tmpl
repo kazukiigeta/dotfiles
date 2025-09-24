@@ -1,0 +1,26 @@
+#!/bin/bash
+
+{{ if eq .chezmoi.os "linux" -}}
+if ! command -v zsh &> /dev/null; then
+    echo "Installing zsh..."
+    {{ if eq .chezmoi.osRelease.id "ubuntu" "debian" -}}
+    sudo apt-get update && sudo apt-get install -y zsh
+    {{ else if eq .chezmoi.osRelease.id "fedora" -}}
+    sudo dnf install -y zsh
+    {{ else if eq .chezmoi.osRelease.id "arch" -}}
+    sudo pacman -S --noconfirm zsh
+    {{ end -}}
+fi
+
+{{ else if eq .chezmoi.os "darwin" -}}
+if ! command -v zsh &> /dev/null; then
+    echo "Installing zsh..."
+    brew install zsh
+fi
+{{ end -}}
+
+if [ "$SHELL" != "$(which zsh)" ]; then
+    echo "Changing default shell to zsh..."
+    sudo chsh -s $(which zsh) $(whoami)
+fi
+
