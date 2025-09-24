@@ -1,0 +1,10 @@
+{{- $email_personal := "igetakazuki@gmail.com" -}}
+{{- $email_work := promptStringOnce . "email.work" "Work email" -}}
+{{- $name := "Kazuki Igeta" -}}
+
+[data]
+    name = {{ $name | quote }}
+    [data.email]
+        personal = {{ $email_personal | quote }}
+        work = {{ $email_work | quote }}
+

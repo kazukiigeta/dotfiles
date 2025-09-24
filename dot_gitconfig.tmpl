@@ -1,0 +1,28 @@
+[user]
+    name = {{ .name }}
+    email = {{ .email.personal }}
+
+[init]
+    defaultBranch = main
+
+[core]
+    editor = vim
+    autocrlf = input
+    ignorecase = false
+
+[pull]
+    rebase = true
+
+[fetch]
+    prune = true
+
+[includeIf "gitdir:~/work/"]
+    path = ~/.gitconfig-work
+
+[alias]
+    st = status -sb
+    co = checkout
+    br = branch
+    cm = commit
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
