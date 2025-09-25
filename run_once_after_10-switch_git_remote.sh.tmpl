@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+
+chezmoi_source="{{ .chezmoi.sourceDir }}"
+
+if [ -d "$chezmoi_source/.git" ]; then
+  current_url=$(git -C "$chezmoi_source" remote get-url origin)
+
+  if echo "$current_url" | grep -q '^https://github.com/'; then
+    ssh_url=$(echo "$current_url" \
+      | sed -E 's|https://github.com/([^/]+)/(.+)$|git@github.com:\1/\2|')
+
+    echo "Switching chezmoi origin from HTTPS to SSH: $ssh_url"
+    git -C "$chezmoi_source" remote set-url origin "$ssh_url"
+  fi
+fi
+
