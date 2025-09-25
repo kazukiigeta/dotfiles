@@ -25,3 +25,10 @@ alias cm="chezmoi"
 export HOMEBREW_NO_ANALYTICS=1
 {{ end -}}
 
+# PNPM
+export PNPM_HOME="$HOME/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
